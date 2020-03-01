@@ -1,0 +1,37 @@
+version: "3"
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - TZ=${TZ}
+    ports:
+      - ${DB_PORT}:3306
+  api:
+    build: ./docker/api-server
+    restart: always
+    ports: 
+      - ${API_PORT}:1323
+    depends_on:
+      - db
+    volumes: 
+      - ./config.json:/go/src/api-server/config.json
+  # spa:
+  #   build: ./docker/spa-server
+  #   restart: always
+  #   ports:
+  #     - ${SPA_PORT}:8080
+  # nginx:
+  #   image: nginx
+  #   container_name: nginx
+  #   restart: always
+  #   ports:
+  #   - ${NGINX_PORT}:80
+  #   environment:
+  #   - TZ=${TZ}
+  #   volumes:
+  #   - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
