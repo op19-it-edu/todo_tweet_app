@@ -4,9 +4,7 @@ WORKDIR /go/src/
 
 RUN apk update && \
     apk add git && \
-    git clone \
-    -b add_config.json \
-    https://github.com/op19-it-edu/api-server.git
+    git clone https://github.com/op19-it-edu/api-server.git
 
 WORKDIR /go/src/api-server
 
